@@ -1,0 +1,8 @@
+*.pdf
+*.out
+*.log
+*.aux
+*/auto/*
+*/_minted*/*
+*.gz
+*.prv
