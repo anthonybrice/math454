@@ -1,0 +1,190 @@
+\documentclass{abrice}
+
+\usepackage{bm}
+\usepackage{tikz}
+\usetikzlibrary{arrows, automata}
+
+\newcommand{\N}{\mathbb{N}}
+
+\author{Anthony Brice}
+\title{Math 454: Homework 1}
+
+\begin{document}
+\maketitle
+
+\section{Problem 1.31}
+\textit{Claim.} For any language $A$, let $A^R = \{ w^R \mid w \in A \}$ where
+$w^R$ is the string $w$ in reverse order. Then if
+$A$ is regular, so is $A^R$.
+
+\begin{proof}
+  Let $A$ be a regular language. Then there is some DFA $M$ which recognizes $w
+  \in A$. Then let NFA $M'$ be $M$ with a few changes:
+  \begin{itemize}
+  \item For each edge in $M$, the direction of the edge is reversed.
+  \item The start state of $M$ is the sole accept state of $M'$.
+  \item $M'$ has an entirely new start state with $\epsilon$-transitions to the
+    states that were the accept states of $M$.
+  \end{itemize}
+  Then $M'$ recognizes $w^R \in A^R$.
+\end{proof}
+
+\section{Problem 1.36}
+\textit{Claim.} Let $B_n = \{ a^k \mid k \text{ is a multiple of } n \}$. For
+all $n \geq 1$, language $B_n$ is regular.
+
+\begin{proof}
+  Let $n \in \N$. Then build a DFA with $n$ states $q_1, q_2, \ldots, q_n$ where
+  $q_1$ is the start state and the sole accept state. Let the transition
+  function be defined by $\delta(q_i, a) = q_j$ where $j = (i \bmod n) + 1$.
+  Then we have constructed a finite automaton accepting $B_n$, thus $B_n$ is
+  regular.
+\end{proof}
+
+\section{Problem 1.37}
+\textit{Claim.} Let $C_n = \{x \mid x \text{ is a binary number that is a
+  multiple of } n \}$. Then for each $n \geq 1$, the language $C_n$ is regular.
+
+\begin{proof}
+  Let $n \in \N$. Note that for any $x \in C_n$, $n$ divides $x$. Then build a
+  DFA with $n$ states $q_1, q_2, \ldots, q_n$ where $q_1$ is the start state and
+  the sole accept state. Let the transition function be defined by $\delta(q_i,
+  a \in \{0,1\}) = q_j$ where $j = ((2i + a) \bmod n) + 1$. Then we have
+  constructed a finite automaton accepting $C_n$, thus $C_n$ is regular.
+\end{proof}
+
+\section{Problem 1.40}
+
+\subsection{Part a)}
+
+\emph{Claim.} The class of regular languages is closed under the
+$\text{NOPREFIX}$ operation defined by
+\[
+  \text{NOPREFIX}(A) = \{ w \in A \mid \text{no proper prefix of } w \text{ is a
+  member of } A\}\, .
+\]
+
+\begin{proof}
+  Let $A$ be a regular language and $M = (Q, \Sigma, \delta, q_0, F)$ be a DFA
+  recognizing $A$. Then $M' = (Q, \Sigma, \delta', q_0, F)$ where
+  \[
+    \delta'(r \in Q, a \in \Sigma) =
+    \begin{cases}
+      \{\delta(r,a)\} & \text{if } r \notin F \\
+      \O & \text{if } r \in F
+    \end{cases}
+  \]
+  is a finite automaton recognizing $\text{NOPREFIX}(A)$.
+\end{proof}
+
+\subsection{Part b)}
+
+\emph{Claim.} The class of regular languages is closed under the
+$\text{NOEXTEND}$ operation defined by
+\[
+  \text{NOEXTEND}(A) = \{ w \in A \mid w \text{ is not the proper prefix of any
+    string in } A\}\, .
+\]
+
+\begin{proof}
+  Let $A$ be a regular language and $M = (Q, \Sigma, \delta, q_0, F)$ be a DFA
+  recognizing $A$. Then construct $M' = (Q, \Sigma, \delta, q_0, F')$ where $F'$
+  is the set of all $q \in F$ for which there exists no path from $q$ to an
+  accept state. Then $M'$ is a finite automaton recognizing $NOEXTEND(A)$.
+\end{proof}
+
+\section{Problem 1.41}
+\textit{Claim.} The class of regular languages is closed under the \textit{perfect
+shuffle} defined by
+\[ \{ w \mid w = a_1b_1 \cdots a_k b_k, \text{ where } a_1
+\cdots a_k \in A, b_1 \cdots b_k \in B, \text{ each } a_i, b_i \in \Sigma \} \]
+for languages $A$ and $B$.
+
+\begin{proof}
+  Let $A$ and $B$ be regular languages, $M_A = (Q_A, \Sigma_A, \delta_A, q_A,
+  F_A)$ be a DFA recognizing $A$, and $M_B = (Q_B, \Sigma_B, \delta_B, q_B,
+  F_B)$ be a DFA recognizing $B$. Then construct $M_{A \times B} = (Q, \Sigma, \delta,
+  q_0, F)$ defined by
+  \begin{itemize}
+  \item $Q = Q_A \times Q_B \times \{A,B\}$,
+  \item $\Sigma = \Sigma_A \cup \Sigma_B$,
+  \item $q_0 = (q_A, q_B, A)$,
+  \item $F = F_A \times F_B \times \{A\}$,
+  \item
+    \[
+      \delta((x \in Q_A, y \in Q_B, z \in \{A, B\}), a \in \Sigma) =
+      \begin{cases}
+        (\delta_A(x,a),y,B) & \text{if } z = A \\
+        (x, \delta_B(y,a), A) & \text{if } z = B\, .
+      \end{cases}
+    \]
+  \end{itemize}
+  Then $M_{A \times B}$ is a finite automaton recognizing the \emph{perfect
+    shuffle} of $A$ and $B$.
+\end{proof}
+
+\section{Problem 1.42}
+
+\emph{Claim.} The class of regular languages is closed under the \emph{shuffle}
+defined by
+\[ \{ w \mid w = a_1b_1 \cdots a_k b_k, \text{ where } a_1
+\cdots a_k \in A, b_1 \cdots b_k \in B, \text{ each } a_i, b_i \in \Sigma^*
+\} \]
+for languages $A$ and $B$.
+
+\begin{proof}
+  Let $A$ and $B$ be regular languages, $M_A = (Q_A, \Sigma_A, \delta_A, q_A,
+  F_A)$ be a DFA recognizing $A$, and $M_B = (Q_B, \Sigma_B, \delta_B, q_B,
+  F_B)$ be a DFA recognizing $B$. Then construct $N_{A \times B} = (Q, \Sigma,
+  \delta, q, F)$ defined by
+  \begin{itemize}
+  \item $Q = (Q_A \times Q_B) \cup \{q_0 \}$,
+  \item $\Sigma = \Sigma_A \cup \Sigma_B$,
+  \item $q = q_0$,
+  \item $F = (F_A \times F_B) \cup \{ q_0\}$,
+  \item
+    \[
+      \delta(z,a) =
+      \begin{cases}
+        (q_A, q_B) & \text{if } z = q_0 \text{ and } a = \epsilon \\
+        (\delta_A(x,a), y) & \text{if } z = (x,y) \in Q_A \times Q_B \text{ and
+        } a \in \Sigma_A \\
+        (x, \delta_B(y,a)) & \text{if } z = (x,y) \in Q_A \times Q_B \text{ and
+        } a \in \Sigma_B\, .
+      \end{cases}
+    \]
+  \end{itemize}
+  Then $N_{A \times B}$ is a finite automaton recognizing the \emph{shuffle} of
+  $A$ and $B$
+\end{proof}
+\end{document}
+
+  % Note that it is sufficient to prove this in the $n = 1$ case since any $B_{n >
+  %   1}$ is necessarily a subset of $B_1$ and is thus regular if $B_1$ is
+  % regular.
+
+  % Consider the DFA in Fig.~\ref{fig:136}. Clearly the DFA recognizes any string
+  % in $\{ a^n \mid n \geq 1\}$, so for all $n \geq 1$, $B_n$ is regular.
+  % \begin{figure}
+  %   \centering
+  %   \label{fig:136}
+  %   \caption{A DFA recognizing $B_n$.}
+  %   \begin{tikzpicture}[->, >=stealth', shorten >=1pt, auto, node
+  %     distance=8em, semithick, initial text={}]
+  %     \node[initial, state, accepting] (q1) {$q_1$};
+  %     %\node[accepting, state] (q2) [right of=q1] {$q_2$};
+
+  %     %\path (q1) edge node {$a$} (q2);
+  %     \path (q1) edge [loop above] node {$a$} (q1);
+  %   \end{tikzpicture}
+  % \end{figure}
+
+  % We formally define the machine in Fig.~\ref{fig:136} below.
+
+  % \begin{align*}
+  %   & Q = \{ q_1 \} \\
+  %   & \Sigma = \{ a \} \\
+  %   & \delta(q_1, a) = q_1 \\
+  %   & q_1 \text{ is the } \text{start state} \\
+  %   & F = \{ q_1 \}\, .
+  % \end{align*}
