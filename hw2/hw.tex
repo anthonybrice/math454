@@ -54,27 +54,11 @@ states.
 \begin{proof}
   Assume $B$ is regular. Then let $p$ be the pumping length of $B$ given by the
   pumping lemma. Choose $s$ to be the string $0^p 1 0^p$. Then there exists $xyz
-  = s$ where for any $i \geq 0$, $xy^iz \in B$. Since we have $p$ $0$'s on the
+  = s$ where for any $i \geq 0$, $x y^i z \in B$. Since we have $p$ $0$'s on the
   left of $s$, $\abs{xy} \leq p$, and $\abs{y} > 0$, we have that $xy$ must be
   of the form $0^+$, which further gives us that $y$ must be of the form $0^+$.
   Then clearly $xyyz \notin B$ since $xyyz$ is not of the form $0^n 1^m 0^n \mid
   m,n \geq 0$. Thus we have found a contradiction, so $B$ is not regular.
-  %
-  % Because $s$ is a
-  % member of $B$ and $s$ has length more than $p$, the pumping lemma guarantees
-  % that $s$ can be split into $3$ pieces, $s = xyz$, where for any $i \geq 0$ the
-  % string $x y^i z$ is in $B$. Then we have three cases, each implying a
-  % contradiction:
-  % \begin{enumerate}[label=\emph{\roman*})]
-  % \item $x,y$ are of the form $0^*$, and $z$ is of the form $0^* 1^*
-  %   0^*$. Then $xyyz$ must be in $B$, but $xyyz$ does not necessarily have the
-  %   same number of $0$'s on each end, so $xyyz$ is not necessarily in $B$.
-  % \item $x,z$ are of the form $0^*$, and $y$ is of the form $0^* 1^* 0^*$. Then
-  %   $xyyz$ is clearly not necessarily in $B$.
-  % \item $x$ is of the form $0^* 1^* 0^*$, and $y,z$ are of the form $0^*$. As in
-  %   \emph{i}), $xyyz$ is not necessarily in $B$.
-  % \end{enumerate}
-  % Since each case leads to a contradiction, $B$ must not be regular.
 \end{proof}
 
 \subsection{Part b)}
@@ -101,17 +85,36 @@ regular.
 
 \subsection{Part d)}
 
-\emph{Claim.} $B = \{ wtw \mid w,t \in \{0,1\}^+ \}$ is not regular.
+\emph{Claim.} $B = \{ wtw \mid w,t \in {\{0,1\}}^+ \}$ is not regular.
 
 \begin{proof}
   Assume $B$ is regular. Then let $p$ be the pumping length of $B$ given by the
-  pumping lemma. Choose $s = 0^p 1 1 0^p 1 \in B$. Then there exists $xyz = s$
-  where for any $i \geq 0$, $xy^iz \in B$. Since we have $p$ $0$'s on the left
+  pumping lemma. Choose $s = 0^p 1 1 0^p 1$. Then there exists $xyz = s$
+  where for any $i \geq 0$, $x y^i z \in B$. Since we have $p$ $0$'s on the left
   of $s$ and since $\abs{xy} \leq p$, $xy$ must be of the form $0^+$, and since
   $\abs{y} > 0$, we further have that $y$ must be of the form $0^+$. Then
   clearly $xyyz \notin B$ since $xyyz$ cannot be of the form $wtw \mid w,t \in
   {\{0,1\}}^+$. Thus we have found a contradiction, so $B$ is not regular.
+\end{proof}
 
+\section{Problem 1.51}
+
+\emph{Claim.} Let $L$ be any language. Then $\equiv_L$ is an equivalence
+relation.
+
+\begin{proof}
+  Let $x$ and $y$ be strings. Then clearly $x \equiv_L x$, so $\equiv_L$ is
+  reflexive. Similarly it is obvious from the given rules that $x \equiv_L y
+  \Rightarrow y \equiv_L x$, so $\equiv_L$ is symmetric. Then we only have left
+  to prove that $\equiv_L$ is transitive.
+
+  Let $z$ also be a string, and assume $x \equiv_L y$ and $y \equiv_L z$.
+  Then for every string $s$, $xs \in L \Leftrightarrow ys \in L$, and
+  $ys \in L \Leftrightarrow zs \in L$. Then $xs \in L \Leftrightarrow zs \in L$,
+  so $x \equiv_L z$. Thus $\equiv_L$ is transitive.
+
+  Since $\equiv_L$ is reflexive, symmetric, and transitive, we have that
+  $\equiv_L$ is an equivalence relation.
 \end{proof}
 
 \end{document}

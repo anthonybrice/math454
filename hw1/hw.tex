@@ -7,7 +7,7 @@
 \newcommand{\N}{\mathbb{N}}
 
 \author{Anthony Brice}
-\title{Math 454: Homework 1}
+\title{Comp 454: Homework 1}
 
 \begin{document}
 \maketitle
@@ -18,8 +18,8 @@ $w^R$ is the string $w$ in reverse order. Then if
 $A$ is regular, so is $A^R$.
 
 \begin{proof}
-  Let $A$ be a regular language. Then there is some DFA $M$ which recognizes $w
-  \in A$. Then let NFA $M'$ be $M$ with a few changes:
+  Let $A$ be a regular language. Then there is some DFA $M$ such that $L(M) =
+  A$. Then let NFA $M'$ be $M$ with a few changes:
   \begin{itemize}
   \item For each edge in $M$, the direction of the edge is reversed.
   \item The start state of $M$ is the sole accept state of $M'$.

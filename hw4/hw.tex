@@ -1,0 +1,45 @@
+\documentclass{abrice}
+
+\title{Comp 454: Homework 4}
+\author{Anthony Brice}
+
+\begin{document}
+\maketitle
+
+\section{Problem 2.25}
+\emph{Claim.} The function $\text{SUFFIX}(A) = \{v \mid uv \in A \text{ for some
+  string } u\}$ forms a closure over the class of context-free languages.
+
+\begin{proof}
+  Let $A$ be a CFL and $G = (V, \Sigma, R, S)$ be the grammar generating strings
+  in $A$ in Chomsky normal form. We can construct a new CFG $G' =
+  (V', \Sigma', R', S')$ generating strings in $\text{SUFFIX}(A)$ by modifying
+  $G$ in the following way:
+  \begin{enumerate}[label=\textit{\roman*})]
+  \item For each $v \in V$, add a corresponding variable $v' \in V'$.
+  \item For each $r \in R$ of the form $A \rightarrow BC$, we add two new rules
+    to $R'$:
+    \begin{IEEEeqnarray*}{rCl}
+      &&A' \rightarrow B' C \\
+      &&A' \rightarrow C'\, .
+    \end{IEEEeqnarray*}
+  \item For each $v \in V$, we add to $R'$ the following: $v' \rightarrow v$ and $v'
+    \rightarrow \epsilon$.
+  \item The start variable of $G'$ is the variable created in \textit{i}
+    corresponding to the start variable of $G$.
+  \end{enumerate}
+
+  Thus $G'$ generates all strings in $\text{SUFFIX}(A)$, so $\text{SUFFIX}(A)$
+  forms a closure over context-free languages.
+\end{proof}
+
+\section{Problem 2.26}
+\emph{Claim.} Let $G$ be a CFG in Chomsky normal form. Then for any non-empty
+string $w \in L(G)$ of length $n$, exactly $2n-1$ steps are required for any
+derivation of $w$.
+
+\begin{proof}
+
+\end{proof}
+
+\end{document}
